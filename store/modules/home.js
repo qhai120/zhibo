@@ -1,16 +1,23 @@
 const moduleA={
 	namespaced: true,
 	state:{
-		username:"fool",
-		age:19
+		index:'1'
 	},
-	mutation:{
+	mutations:{
+		goToDirect(state,index){
+			uni.navigateTo({
+				url:'/pages/direct/direct',
+				animationType:"fade-in",
+				success: (res) => {
+					res.eventChannel.emit('pushIndex',{Index:index})
+				}
+			})
+		}
+	},
+	actions:{
 		
 	},
-	action:{
-		
-	},
-	getter:{
+	getters:{
 		
 	}
 }

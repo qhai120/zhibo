@@ -1,15 +1,52 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}{{age}}</text>
+		<!-- 轮播图开始 -->
+		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000"
+			style="width: 750rpx; height: 250rpx;">
+			<swiper-item>
+				<view class="swiper-item">
+					<image src="@/static/banner/banner_1.png" mode="" class="banner-img"></image>
+				</view>
+			</swiper-item>
+			<swiper-item>
+				<view class="swiper-item">
+					<image src="@/static/banner/banner_2.png" mode="" class="banner-img"></image>
+				</view>
+			</swiper-item>
+		</swiper>
+		<!-- 轮播图结束 -->
+		<!-- 首页列表 -->
+		<view class="flex flex-wrap" style="width: 750rpx;">
+			<view v-for="(item,index) in 6" :key="index" @click="goToDirect(index)" class="center-img rounded">
+				<image src="../../static/cneter/history_goods_1.jpg" style="width: 330rpx;height: 330rpx;" mode="">
+				</image>
+				<view class="flex image-top" style="top:10rpx">
+					<view class="boder-yuan boder-bgc">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-jinbi"></use>
+						</svg>
+						<text>0</text>
+					</view>
+					<view class="boder-yuan boder-bgc"><text>热度:0</text></view>
+				</view>
+				<view class="flex image-bottom" style="bottom: 10rpx;">
+					<view style="color: red;"><text>标题</text></view>
+					<view class="boder-yuan boder-bgc">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-zhibozhong"></use>
+						</svg>
+						<text>直播中</text>
+					</view>
+				</view>
+			</view>
 		</view>
+		<!-- 首页列表页面结束 -->
 	</view>
 </template>
 
 <script>
 	import {
-		mapState
+		mapState,mapMutations
 	} from 'vuex'
 	export default {
 		data() {
@@ -21,15 +58,15 @@
 
 		},
 		methods: {
-
+			...mapMutations('moduleA',['goToDirect'])
 		},
 		computed: {
-			...mapState('moduleA',['age'])
+			...mapState('moduleA', ['age'])
 		}
 	}
 </script>
 
-<style>
+<style lang="less">
 	.content {
 		display: flex;
 		flex-direction: column;
@@ -37,22 +74,39 @@
 		justify-content: center;
 	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
+	.banner-img {
+		width: 750rpx;
+		height: 250rpx;
 	}
 
-	.text-area {
-		display: flex;
-		justify-content: center;
+	.center-img {
+		width: 350rpx;
+		height: 350rpx;
+		background-color: aqua;
+		padding: 10rpx;
+		box-sizing: border-box;
+		margin-top: 10rpx;
+		position: relative;
 	}
 
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
+	.image-top,
+	.image-bottom {
+		position: absolute;
+		width: 90%;
+		left: 15rpx;
+		justify-content: space-between;
+
+		.boder-bgc {
+			text{
+				display: inline-block;
+				margin-left: 15rpx;
+				line-height: 24rpx;
+			}
+			background-color: #f5f5f5;
+			align-items: center;
+			color: white;
+			height: 40rpx;
+			padding: 4rpx 20rpx;
+		}
 	}
 </style>
