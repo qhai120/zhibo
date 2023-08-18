@@ -33,8 +33,9 @@
             "path" : "pages/direct/direct",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "app-plus": {
+                	"titleNView":false
+                }
             }
             
         }

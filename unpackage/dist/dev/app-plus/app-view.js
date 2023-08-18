@@ -326,6 +326,11 @@ var render = function () {
               key: index,
               staticClass: _vm._$g("9-" + $30, "sc"),
               attrs: { _i: "9-" + $30 },
+              on: {
+                click: function ($event) {
+                  return _vm.$handleViewEvent($event)
+                },
+              },
             },
             [
               _c("v-uni-image", {
@@ -374,7 +379,7 @@ var render = function () {
                     },
                     [
                       _c("v-uni-text", { attrs: { _i: "17-" + $30 } }, [
-                        _vm._v("热度:0"),
+                        _vm._v("热度: 0"),
                       ]),
                     ],
                     1
@@ -393,7 +398,7 @@ var render = function () {
                   _c(
                     "uni-view",
                     {
-                      staticStyle: { color: "red" },
+                      staticClass: _vm._$g("19-" + $30, "sc"),
                       attrs: { _i: "19-" + $30 },
                     },
                     [
@@ -532,7 +537,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../HBuilderX.3.6.8.20221027-alpha/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".content {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.banner-img {\n  width: 750rpx;\n  height: 250rpx;\n}\n.center-img {\n  width: 350rpx;\n  height: 350rpx;\n  background-color: aqua;\n  padding: 10rpx;\n  box-sizing: border-box;\n  margin-top: 10rpx;\n  position: relative;\n}\n.image-top,\n.image-bottom {\n  position: absolute;\n  width: 90%;\n  left: 15rpx;\n  justify-content: space-between;\n}\n.image-top .boder-bgc,\n.image-bottom .boder-bgc {\n  background-color: #f5f5f5;\n  align-items: center;\n  color: white;\n  height: 40rpx;\n  padding: 4rpx 20rpx;\n}\n.image-top .boder-bgc uni-text,\n.image-bottom .boder-bgc uni-text {\n  display: inline-block;\n  margin-left: 15rpx;\n  line-height: 24rpx;\n}\n", ""]);
+exports.push([module.i, ".content {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.banner-img {\n  width: 750rpx;\n  height: 250rpx;\n}\n.center-img {\n  width: 350rpx;\n  height: 350rpx;\n  background-color: aqua;\n  padding: 10rpx;\n  box-sizing: border-box;\n  margin-top: 10rpx;\n  position: relative;\n}\n.image-top,\n.image-bottom {\n  position: absolute;\n  width: 90%;\n  left: 15rpx;\n  justify-content: space-between;\n}\n.image-top .boder-bgc,\n.image-bottom .boder-bgc {\n  background-color: rgba(0, 0, 0, 0.4);\n  align-items: center;\n  color: white;\n  height: 40rpx;\n  padding: 4rpx 20rpx;\n  text-align: center;\n}\n.image-top .boder-bgc uni-text,\n.image-bottom .boder-bgc uni-text {\n  display: inline-block;\n  margin-left: 10rpx;\n  line-height: 24rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

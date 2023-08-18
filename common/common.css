@@ -13,3 +13,19 @@
 .boder-yuan{
 	border-radius: 20rpx;
 }
+.text_yuan{
+	width: 80rpx;
+	height: 80rpx;
+	background-color: white;
+	border-radius: 50%;
+}
+.text_inlin_block{
+	display: inline-block;
+	line-height: 80rpx;
+	color: white;
+	text-align: center;
+}
+.input_yuan{
+	border: 1px solid black;
+	border-radius: 50rpx;
+}

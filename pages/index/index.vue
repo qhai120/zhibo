@@ -27,10 +27,10 @@
 						</svg>
 						<text>0</text>
 					</view>
-					<view class="boder-yuan boder-bgc"><text>热度:0</text></view>
+					<view class="boder-yuan boder-bgc"><text>热度: 0</text></view>
 				</view>
 				<view class="flex image-bottom" style="bottom: 10rpx;">
-					<view style="color: red;"><text>标题</text></view>
+					<view class="boder-yuan boder-bgc"><text>标题</text></view>
 					<view class="boder-yuan boder-bgc">
 						<svg class="icon" aria-hidden="true">
 							<use xlink:href="#icon-zhibozhong"></use>
@@ -99,14 +99,15 @@
 		.boder-bgc {
 			text{
 				display: inline-block;
-				margin-left: 15rpx;
+				margin-left: 10rpx;
 				line-height: 24rpx;
 			}
-			background-color: #f5f5f5;
+			background-color: rgba(0,0,0,0.4);
 			align-items: center;
 			color: white;
 			height: 40rpx;
 			padding: 4rpx 20rpx;
+			text-align: center;
 		}
 	}
 </style>
