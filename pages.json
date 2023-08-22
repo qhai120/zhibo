@@ -38,7 +38,10 @@
                 }
             }
             
-        }
+        },
+		{
+			"path": "pages/nvues/nvues"
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

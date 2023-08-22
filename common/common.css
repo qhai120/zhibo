@@ -2,6 +2,10 @@
 	display: flex;
 	justify-content:space-around;
 	align-items: center;
+	flex-direction: row;
+}
+.rown{
+	flex-direction: row;
 }
 .flex-wrap{
 	flex-wrap: wrap;
@@ -12,6 +16,29 @@
 }
 .boder-yuan{
 	border-radius: 20rpx;
+}
+.direct_Head_Left_Right{
+			display: flex;
+			flex-direction: column;
+			justify-content: left;
+			margin-left: 10rpx;
+		}
+.boder_liwu_right{
+		width: 80rpx;
+		height: 80rpx;
+		margin-left: 10rpx;
+		color: orange;
+		font-size: 60rpx;
+		line-height: 80rpx;
+	}
+.boder_liwu_left{
+	height: 86rpx;
+	width: 335rpx;
+	background-image: linear-gradient(to right,rgba(255,232,159),aqua);
+	margin-bottom: 15rpx;
+	padding-left: 10rpx;
+	box-sizing: border-box;
+	border-radius: 40rpx;
 }
 .text_yuan{
 	width: 80rpx;
@@ -26,6 +53,6 @@
 	text-align: center;
 }
 .input_yuan{
-	border: 1px solid black;
-	border-radius: 50rpx;
+	background-color: white;
+	border-radius: 35rpx;
 }

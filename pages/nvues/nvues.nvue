@@ -1,0 +1,29 @@
+<template>
+	<view style="flex-direction: row;">
+		<view class="div" v-for="i in 4" :key="i" >
+			
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style lang="less" scoped>
+.div{
+	width: 50rpx;
+	height: 50rpx;
+	flex-direction: row;
+	background-color: aqua;
+}
+</style>
