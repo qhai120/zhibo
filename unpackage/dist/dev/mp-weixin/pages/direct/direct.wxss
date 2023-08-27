@@ -1,0 +1,124 @@
+
+view,
+label,
+swiper-item,
+scroll-view {
+  display:flex;
+  flex-direction:column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  align-items: stretch;
+  align-content: flex-start;
+}
+view,
+image,
+input,
+scroll-view,
+swiper,
+swiper-item,
+text,
+textarea,
+video {
+  position: relative;
+  border: 0px solid #000000;
+  box-sizing: border-box;
+}
+swiper-item {
+  position: absolute;
+}
+button {
+  margin: 0;
+}
+
+.direct_container.data-v-65e72238 {
+  height: 1334rpx;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.rows.data-v-65e72238 {
+  flex-direction: row;
+}
+.direct_Head.data-v-65e72238 {
+  padding: 5rpx;
+  width: 750rpx;
+  height: 100rpx;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+}
+.direct_Head .direct_Head_Left.data-v-65e72238 {
+  width: 325rpx;
+  padding: 0 10rpx;
+  background-color: aqua;
+  align-items: center;
+  border-radius: 50rpx;
+}
+.Gold.data-v-65e72238 {
+  flex-direction: row;
+  position: fixed;
+  top: 110rpx;
+  margin-left: 20rpx;
+  align-items: center;
+  z-index: 1000;
+  color: orange;
+  font-weight: 500;
+  font-size: 35rpx;
+}
+.Gold .Gold_Num.data-v-65e72238 {
+  display: inline-block;
+  padding-left: 10rpx;
+  font-weight: 400;
+  color: white;
+  font-size: 30rpx;
+}
+.liwu.data-v-65e72238 {
+  position: fixed;
+  width: 520rpx;
+  height: 300rpx;
+  z-index: 1000;
+  top: 175rpx;
+  padding-left: 20rpx;
+  padding-top: 10rpx;
+  box-sizing: border-box;
+}
+.video.data-v-65e72238 {
+  width: 750rpx;
+  padding: 5rpx;
+  box-sizing: border-box;
+  padding-top: 400rpx;
+}
+.barrage.data-v-65e72238 {
+  width: 750rpx;
+  height: 470rpx;
+  padding-bottom: 100rpx;
+}
+.direct_Bottom.data-v-65e72238 {
+  position: fixed;
+  bottom: 0;
+  height: 90rpx;
+  width: 750rpx;
+  justify-content: space-between;
+  padding: 10rpx;
+  box-sizing: border-box;
+}
+.direct_Bottom input.data-v-65e72238 {
+  width: 40%;
+  height: 70rpx;
+  padding-left: 20rpx;
+  box-sizing: border-box;
+}
+.direct_Bottom .direct_Bottom_Right.data-v-65e72238 {
+  font-size: 60rpx;
+  align-items: center;
+}
+.direct_Bottom .direct_Bottom_Right .bottom_Icon.data-v-65e72238 {
+  height: 70rpx;
+  width: 70rpx;
+  line-height: 70rpx;
+  margin-right: 10rpx;
+  border-radius: 50%;
+}
+.direct_Bottom .direct_Bottom_Right .bottom_Icon.data-v-65e72238:hover {
+  background-color: orange;
+}
+

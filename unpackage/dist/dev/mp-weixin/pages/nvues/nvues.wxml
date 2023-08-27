@@ -1,0 +1,1 @@
+<view style="flex-direction:row;" class="data-v-0e057f20"><block wx:for="{{4}}" wx:for-item="i" wx:for-index="__i0__" wx:key="*this"><view class="div data-v-0e057f20"></view></block></view>

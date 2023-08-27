@@ -1,7 +1,6 @@
 <template>
-	<view>
-		<scroll-view scroll-y  style="height: 300rpx;" >
-			<view v-for="(item,index) in 4" :key="index" class="row" >
+	<scroll-view scroll-y  style="height: 300rpx;" >
+			<view v-for="(item,index) in num" :key="index" class="row" :ref="'item'+index" >
 					<view :class="['boder_liwu_left','row']" style="align-items: center;">
 						<image src="../../static/phone.png" class="text_yuan" mode=""></image>
 						<view class="direct_Head_Left_Right" style="width: 150rpx;">
@@ -18,17 +17,40 @@
 						x1
 					</view>
 			</view>
-		</scroll-view>
-	</view>
+	</scroll-view>
 </template>
 
 <script>
+	const dom = uni.requireNativePlugin('dom')
+	import { mapMutations,mapState,mapActions } from 'vuex';
 	export default {
 		name:"live",
 		data() {
 			return {
 				
 			};
+		},
+		computed:{
+			...mapState('direct',['num'])
+		},
+		methods:{
+			...mapMutations('direct',['addNum','resetNum']),
+			// 底部显示礼物
+			tobottom(){
+				this.$nextTick(()=>{
+					let index=this.num -1;
+					let ref='item'+index;
+					if(this.$refs[ref]){
+						dom.scrollToElement(this.$refs[ref][0],{})
+					}
+				})
+			},
+			send(gift){
+				console.log(gift)
+			}
+		},
+		created(){
+			this.addNum()
 		}
 	}
 </script>

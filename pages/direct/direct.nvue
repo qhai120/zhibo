@@ -8,10 +8,11 @@
 					<text style="display: block;color: white;">昵称</text>
 					<text style="display: block;color: white;">1000</text>
 				</view>
-				<text :class="['text_inlin_block' ,'text_yuan']" style="background-color: red;margin-left: 75rpx;">+</text>
+				<text :class="['text_inlin_block' ,'text_yuan']"
+					style="background-color: red;margin-left: 75rpx;">+</text>
 			</view>
 			<view class="rows">
-				<scroll-view :scroll-x="true" style="width: 240rpx" >
+				<scroll-view :scroll-x="true" style="width: 240rpx">
 					<view class="rows">
 						<view v-for="(item,index) in 12" :key="index" style="display: flex;">
 							<image src="../../static/phone.png" class="text_yuan" mode=""></image>
@@ -30,7 +31,7 @@
 		<!-- 金币区域结束 -->
 		<!-- 礼物区开始 -->
 		<view class="liwu">
-			<live></live>
+			<live ref="gift"></live>
 		</view>
 		<!-- 礼物区结束 -->
 		<!-- 直播位置开始 -->
@@ -40,12 +41,12 @@
 		<!-- 直播位置结束 -->
 		<!-- 弹幕部分开始 -->
 		<view class="barrage">
-			111
+			<Fdanmu></Fdanmu>
 		</view>
 		<!-- 弹幕部分结束 -->
 		<!-- 底部开始 -->
-		<view :class="['rows','direct_Bottom']" >
-			<input type="text" class="input_yuan" placeholder="说点什么...">
+		<view :class="['rows','direct_Bottom']">
+			<input type="text" class="input_yuan" max-length="20" v-model.lazy="title" @click="open" placeholder="说点什么...">
 			<view :class="['rows', 'direct_Bottom_Right'] ">
 				<svg class="icon bottom_Icon" aria-hidden="true">
 					<use xlink:href="#icon-jinbi"></use>
@@ -62,131 +63,188 @@
 			</view>
 		</view>
 		<!-- 底部结束 -->
+		<!-- 底部弹窗 -->
+		<uni-popup ref="popup" type="bottom">
+			<view class="bottom_input rows">
+				<input type="text" name="" id="" v-model.lazy="title" placeholder="发送一条友善的弹幕吧">
+				<button @click="close()">发送</button>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
-import { mapMutations,mapState,mapActions } from 'vuex';
-import live from '../../components/live/live.vue'
+	import {
+		mapMutations,
+		mapState,
+		mapActions
+	} from 'vuex';
+	import live from '../../components/live/live.vue'
+	import Fdanmu from '../../components/Fdanmu/Fdanmu.vue'
 	export default {
 		data() {
 			return {
-				
+				title: ""
 			};
 		},
-		components:{
-			live
+		components: {
+			live,Fdanmu
 		},
-		computed:{
-			...mapState('direct',['index','video'])
+		computed: {
+			...mapState('direct', ['index', 'video'])
 		},
-		methods:{
-		...mapMutations('direct',['changeIndex']),
-		...mapActions('direct',['getVideo']),
-		pullIndex(state){
-			this.getOpenerEventChannel().on('pushIndex',(data)=>{
-				this.changeIndex(data.Index)
+		methods: {
+			...mapMutations('direct', ['changeIndex']),
+			...mapActions('direct', ['getVideo']),
+			pullIndex(state) {
+				this.getOpenerEventChannel().on('pushIndex', (data) => {
+					this.changeIndex(data.Index)
+				})
+			},
+			open() {
+				this.$refs.popup.open('bottom')
+			},
+			close() {
+				this.$refs.popup.close()
+			}
+		},
+		mounted() {
+			// 给子组件传递参数
+			setTimeout(() => {
+				this.$refs.gift.send({
+					a: 10086
+				}, 1000)
 			})
-		}	
 		},
 		onLoad() {
 			this.pullIndex()
-			this.getVideo(this.$url+'/getVideo/video')
+			this.getVideo(this.$url + '/getVideo/video')
 		}
 	}
 </script>
 
-<style lang="less" scoped >
-.direct_container{
-	height: 1334rpx;
-	background-color: rgba(0, 0, 0, 0.4);
-}
-.rows{
-	flex-direction: row;
-}
-.direct_Head{
-	padding: 5rpx;
-	width: 750rpx;
-	height: 100rpx;
-	position: fixed;
-	z-index: 1000;
-	top: 0;
-	.direct_Head_Left{
-		width: 325rpx;
-		padding: 0 10rpx;
-		background-color: aqua;
-		align-items: center;
-		border-radius: 50rpx;
+<style lang="less" scoped>
+	.direct_container {
+		height: 1334rpx;
+		background-color: rgba(0, 0, 0, 0.4);
 	}
-}
 
-.Gold{
-	flex-direction: row;
-	position: fixed;
-	top:110rpx;
-	margin-left: 20rpx;
-	align-items: center;
-	z-index: 1000;
-	color: orange;
-	font-weight: 500;
-	font-size: 35rpx;
-	.Gold_Num{
-		display: inline-block;
-		padding-left: 10rpx;
-		font-weight: 400;
-		color: white;
-		font-size: 30rpx
+	.rows {
+		flex-direction: row;
 	}
-}
-.liwu{
-	position: fixed;
-	width: 520rpx;
-	height: 300rpx;
-	z-index: 1000;
-	top: 175rpx;
-	padding-left: 20rpx;
-	padding-top: 10rpx;
-	box-sizing: border-box;
-}
-.video{
-	width: 750rpx;
-	padding: 5rpx;
-	box-sizing: border-box;
-	padding-top: 400rpx;
-}
-.barrage{
-	width: 750rpx;
-	height: 470rpx;
-	padding-bottom: 100rpx;
-}
-.direct_Bottom{
-	position: fixed;
-	bottom: 0;
-	height: 90rpx;
-	width: 750rpx;
-	justify-content: space-between;
-	padding: 10rpx;
-	box-sizing: border-box;
-	input{
-		width: 40%;
-		height: 70rpx;
+
+	.direct_Head {
+		padding: 5rpx;
+		width: 750rpx;
+		height: 100rpx;
+		position: fixed;
+		z-index: 1;
+		top: 0;
+
+		.direct_Head_Left {
+			width: 325rpx;
+			padding: 0 10rpx;
+			background-color: aqua;
+			align-items: center;
+			border-radius: 50rpx;
+		}
+	}
+
+	.Gold {
+		flex-direction: row;
+		position: fixed;
+		top: 110rpx;
+		margin-left: 20rpx;
+		align-items: center;
+		z-index: 1;
+		color: orange;
+		font-weight: 500;
+		font-size: 35rpx;
+
+		.Gold_Num {
+			display: inline-block;
+			padding-left: 10rpx;
+			font-weight: 400;
+			color: white;
+			font-size: 30rpx
+		}
+	}
+
+	.liwu {
+		position: fixed;
+		width: 520rpx;
+		height: 300rpx;
+		z-index: 1;
+		top: 175rpx;
 		padding-left: 20rpx;
+		padding-top: 10rpx;
 		box-sizing: border-box;
 	}
-	.direct_Bottom_Right{
-		font-size: 60rpx;
-		align-items: center;
-		.bottom_Icon{
+
+	.video {
+		width: 750rpx;
+		padding: 5rpx;
+		box-sizing: border-box;
+		padding-top: 400rpx;
+	}
+
+	.barrage {
+		width: 750rpx;
+		height: 380rpx;
+		padding-bottom: 100rpx;
+		background-color: orange;
+	}
+
+	.direct_Bottom {
+		position: fixed;
+		bottom: 0;
+		height: 90rpx;
+		width: 750rpx;
+		justify-content: space-between;
+		padding: 10rpx;
+		box-sizing: border-box;
+
+		input {
+			width: 40%;
 			height: 70rpx;
-			width: 70rpx;
-			line-height: 70rpx;
-			margin-right: 10rpx;
-			border-radius: 50%;
+			padding-left: 20rpx;
+			box-sizing: border-box;
 		}
-		.bottom_Icon:hover{
-			background-color: orange;
+
+		.direct_Bottom_Right {
+			font-size: 60rpx;
+			align-items: center;
+
+			.bottom_Icon {
+				height: 70rpx;
+				width: 70rpx;
+				line-height: 70rpx;
+				margin-right: 10rpx;
+				border-radius: 50%;
+			}
+
+			.bottom_Icon:hover {
+				background-color: orange;
+			}
 		}
 	}
-}
-</style>
 
+	.bottom_input {
+		height: 120rpx;
+		padding: 10rpx;
+		justify-content: space-between;
+		align-items: center;
+		box-sizing: border-box;
+		background-color: white;
+
+		input {
+			height: 100rpx;
+			width: 400rpx;
+		}
+
+		button {
+			height: 100rpx;
+			width: 200rpx;
+		}
+	}
+</style>

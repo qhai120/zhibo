@@ -2,12 +2,24 @@ const direct={
 	namespaced: true,
 	state:{
 		index:'',
-		video:''
+		video:'',
+		num:0
 	},
 	mutations:{
 		changeIndex(state,index){
 			state.index=index;
 			console.log(state.index)
+		},
+		addNum(state){
+			let num=setInterval(()=>{
+				state.num++;
+				if(state.num){
+					let num=setTimeout(()=>{
+						state.num--
+					},1000)
+				}
+			},2000)
+			
 		}
 	},
 	actions:{

@@ -20,8 +20,6 @@
 </script>
 
 <style>
-	@import url(colorui/main.css);
-	@import url(colorui/icon.css);
 	@import url(common/common.css);
 	.icon {
 	  width: 1em;
