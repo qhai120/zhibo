@@ -1,5 +1,10 @@
 <template>
 	<view class="direct_container">
+		<!-- 顶部开始 -->
+		<view class="direct_top">
+			<text>房间</text>
+		</view>
+		<!-- 顶部结束 -->
 		<!-- 头部开始 -->
 		<view :class="['direct_Head','rows']" style="justify-content: space-between">
 			<view :class="['direct_Head_Left', 'rows']" style="justify-content: left;">
@@ -9,13 +14,13 @@
 					<text style="display: block;color: white;">1000</text>
 				</view>
 				<text :class="['text_inlin_block' ,'text_yuan']"
-					style="background-color: red;margin-left: 75rpx;">+</text>
+					style="background-color: red;margin-left: 50rpx;">+</text>
 			</view>
-			<view class="rows">
-				<scroll-view :scroll-x="true" style="width: 240rpx">
+			<view class="rows" style="padding-top: 5rpx;">
+				<scroll-view scroll-x="true" show-scrollbar="false" style="width: 260rpx ;white-space: nowrap;" >
 					<view class="rows">
-						<view v-for="(item,index) in 12" :key="index" style="display: flex;">
-							<image src="../../static/phone.png" class="text_yuan" mode=""></image>
+						<view v-for="(item,index) in 12" :key="index">
+							<image src="../../static/phone.png" class="text_yuan" style="margin-right: 10rpx;" mode=""></image>
 						</view>
 					</view>
 				</scroll-view>
@@ -36,7 +41,7 @@
 		<!-- 礼物区结束 -->
 		<!-- 直播位置开始 -->
 		<view class="video">
-			<video :src="video" :controls="false" :autoplay="false" style="width: 99%;"></video>
+			<video src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" enable-progress-gesture="false" :controls="false" autoplay="false" style="width: 99%;" enable-danmu="true" danmu-btn :danmu-list="danmuList"></video>
 		</view>
 		<!-- 直播位置结束 -->
 		<!-- 弹幕部分开始 -->
@@ -45,29 +50,24 @@
 		</view>
 		<!-- 弹幕部分结束 -->
 		<!-- 底部开始 -->
-		<view :class="['rows','direct_Bottom']">
-			<input type="text" class="input_yuan" max-length="20" v-model.lazy="title" @click="open" placeholder="说点什么...">
-			<view :class="['rows', 'direct_Bottom_Right'] ">
-				<svg class="icon bottom_Icon" aria-hidden="true">
-					<use xlink:href="#icon-jinbi"></use>
-				</svg>
-				<svg class="icon bottom_Icon" aria-hidden="true">
-					<use xlink:href="#icon-liwu1"></use>
-				</svg>
-				<svg class="icon bottom_Icon" aria-hidden="true">
-					<use xlink:href="#icon-fenxiang"></use>
-				</svg>
-				<svg class="icon bottom_Icon" aria-hidden="true">
-					<use xlink:href="#icon-guanbi"></use>
-				</svg>
+		<input type="text">
+		<view class="rows direct_Bottom">
+			
+			<text class="direct_Bottom_Left" @click="open()" value="说点什么吧" >{{title}}</text>
+
+			<view class="rows direct_Bottom_Right ">
+				<image src="../../static/tupian/liwu1.png" class="image-bottom" mode=""></image>
+				<image src="../../static/tupian/liwu.png"class="image-bottom"mode=""></image>
+				<image src="../../static/tupian/fenxiang.png"class="image-bottom" mode=""></image>
+				<image src="../../static/tupian/guanbi.png"class="image-bottom" mode=""></image>
 			</view>
 		</view>
 		<!-- 底部结束 -->
 		<!-- 底部弹窗 -->
 		<uni-popup ref="popup" type="bottom">
 			<view class="bottom_input rows">
-				<input type="text" name="" id="" v-model.lazy="title" placeholder="发送一条友善的弹幕吧">
-				<button @click="close()">发送</button>
+				<input type="text" name="" id="" class="input1" v-model="title" placeholder="发送一条友善的弹幕吧">
+				<button @click="close()" class="button1">发送</button>
 			</view>
 		</uni-popup>
 	</view>
@@ -84,7 +84,14 @@
 	export default {
 		data() {
 			return {
-				title: ""
+				title: "",
+				danmuList:[
+					{
+						text:"真是太棒了",
+						color:'#ff0000',
+						time:1
+					}
+				]
 			};
 		},
 		components: {
@@ -125,21 +132,30 @@
 
 <style lang="less" scoped>
 	.direct_container {
-		height: 1334rpx;
+		height: 1620rpx;
 		background-color: rgba(0, 0, 0, 0.4);
 	}
 
 	.rows {
 		flex-direction: row;
 	}
-
+	.direct_top{
+		position: fixed;
+		top: 0;
+		height: 100rpx;
+		width: 750rpx;
+		z-index:1;
+		align-items: center;
+		justify-content: center;
+		background-color: rbga(0,0,0,0.4);
+	}
 	.direct_Head {
 		padding: 5rpx;
 		width: 750rpx;
 		height: 100rpx;
 		position: fixed;
 		z-index: 1;
-		top: 0;
+		top: 100rpx;
 
 		.direct_Head_Left {
 			width: 325rpx;
@@ -153,7 +169,7 @@
 	.Gold {
 		flex-direction: row;
 		position: fixed;
-		top: 110rpx;
+		top: 210rpx;
 		margin-left: 20rpx;
 		align-items: center;
 		z-index: 1;
@@ -162,7 +178,7 @@
 		font-size: 35rpx;
 
 		.Gold_Num {
-			display: inline-block;
+			
 			padding-left: 10rpx;
 			font-weight: 400;
 			color: white;
@@ -175,7 +191,7 @@
 		width: 520rpx;
 		height: 300rpx;
 		z-index: 1;
-		top: 175rpx;
+		top: 265rpx;
 		padding-left: 20rpx;
 		padding-top: 10rpx;
 		box-sizing: border-box;
@@ -190,7 +206,7 @@
 
 	.barrage {
 		width: 750rpx;
-		height: 380rpx;
+		height: 650rpx;
 		padding-bottom: 100rpx;
 		background-color: orange;
 	}
@@ -198,33 +214,28 @@
 	.direct_Bottom {
 		position: fixed;
 		bottom: 0;
-		height: 90rpx;
+		height: 100rpx;
 		width: 750rpx;
+		padding-bottom: 5rpx;
+		align-items: center;
 		justify-content: space-between;
-		padding: 10rpx;
 		box-sizing: border-box;
-
-		input {
-			width: 40%;
+		.direct_Bottom_Left{
+			width: 350rpx;
 			height: 70rpx;
+			background-color: white;
+			margin-left: 20rpx;
 			padding-left: 20rpx;
-			box-sizing: border-box;
+			border-radius: 35rpx;
+			line-height: 70rpx;
+			color: #e3e3e3;
 		}
-
 		.direct_Bottom_Right {
-			font-size: 60rpx;
 			align-items: center;
-
-			.bottom_Icon {
-				height: 70rpx;
+			.image-bottom{
 				width: 70rpx;
-				line-height: 70rpx;
+				height: 70rpx;
 				margin-right: 10rpx;
-				border-radius: 50%;
-			}
-
-			.bottom_Icon:hover {
-				background-color: orange;
 			}
 		}
 	}
@@ -237,12 +248,12 @@
 		box-sizing: border-box;
 		background-color: white;
 
-		input {
+		.input1 {
 			height: 100rpx;
 			width: 400rpx;
 		}
 
-		button {
+		.button1 {
 			height: 100rpx;
 			width: 200rpx;
 		}

@@ -20,17 +20,8 @@
 .direct_Head_Left_Right{
 			display: flex;
 			flex-direction: column;
-			justify-content: left;
 			margin-left: 10rpx;
 		}
-.boder_liwu_right{
-		width: 80rpx;
-		height: 80rpx;
-		margin-left: 10rpx;
-		color: orange;
-		font-size: 60rpx;
-		line-height: 80rpx;
-	}
 .boder_liwu_left{
 	height: 86rpx;
 	width: 335rpx;
@@ -47,7 +38,6 @@
 	border-radius: 50%;
 }
 .text_inlin_block{
-	display: inline-block;
 	line-height: 80rpx;
 	color: white;
 	text-align: center;

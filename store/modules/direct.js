@@ -11,15 +11,12 @@ const direct={
 			console.log(state.index)
 		},
 		addNum(state){
-			let num=setInterval(()=>{
 				state.num++;
 				if(state.num){
 					let num=setTimeout(()=>{
 						state.num--
 					},1000)
 				}
-			},2000)
-			
 		}
 	},
 	actions:{

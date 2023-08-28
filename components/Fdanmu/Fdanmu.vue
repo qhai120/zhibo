@@ -1,10 +1,10 @@
 <template>
 	<view>
-		<scroll-view scroll-y="true"  style="height: 380rpx;" scroll-with-animation  :show-scrollbar="false" :scroll-into-view="scrollinto">
+		<scroll-view scroll-y="true"  style="height: 650rpx;" scroll-with-animation  :show-scrollbar="false" :scroll-into-view="scrollinto">
 				<view v-for="(item,index) in list" :key="item.id" :id="'text'+item.id">
 					<view class="danmu_text">
-						<text style="color: red;">{{item.name}}:</text>
-						<text style="color: white">{{item.text}}</text>
+						<text class="text1" style="color: red;">{{item.name}}:</text>
+						<text class="text1" style="color: white">{{item.text}}</text>
 					</view>
 				</view>
 		</scroll-view>
@@ -53,14 +53,12 @@
 <style lang="less" scoped>
 .danmu_text{
 	flex-direction: row;
-	align-items: top;
 	padding: 10rpx;
 	padding-left: 20rpx;
 	box-sizing: border-box;
-	text{
+	.text1{
 		font-weight: 500;
 		letter-spacing: 4rpx;
-		display: inline-block;
 		font-size: 30rpx;
 		line-height: 40rpx;
 		margin-right: 10rpx;

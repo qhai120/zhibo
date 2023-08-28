@@ -1,7 +1,8 @@
 const moduleA={
 	namespaced: true,
 	state:{
-		index:'1'
+		index:'1',
+		a:3
 	},
 	mutations:{
 		goToDirect(state,index){

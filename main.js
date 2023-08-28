@@ -1,5 +1,5 @@
 import App from './App'
-import "common/iconfont/iconfont.js"
+// import "common/iconfont/iconfont.js"
 import store from './store/index.js'
 // #ifndef VUE3
 import Vue from 'vue'

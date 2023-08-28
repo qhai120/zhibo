@@ -21,12 +21,5 @@
 
 <style>
 	@import url(common/common.css);
-	.icon {
-	  width: 1em;
-	  height: 1em;
-	  vertical-align: -0.15em;
-	  fill: currentColor;
-	  overflow: hidden;
-	}
 	/*每个页面公共css */
 </style>

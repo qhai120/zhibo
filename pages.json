@@ -31,12 +31,11 @@
         }
         ,{
             "path" : "pages/direct/direct",
-            "style" :                                                                                    
-            {
-                "app-plus": {
-                	"titleNView":false
-                }
-            }
+            "style" :{
+				"app-plus": {
+					"titleNView":false
+				}
+			}
             
         },
 		{

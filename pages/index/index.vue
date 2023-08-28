@@ -22,19 +22,17 @@
 				</image>
 				<view class="flex image-top" style="top:10rpx">
 					<view class="boder-yuan boder-bgc">
-						<svg class="icon" aria-hidden="true">
-							<use xlink:href="#icon-jinbi"></use>
-						</svg>
-						<text>0</text>
+						<image src="../../static/tupian/jinbi.png" style=" width: 40rpx;
+						height: 40rpx;vertical-align:bottom;" mode=""></image>
+						<view style="padding-left: 10rpx;">   0</view>
 					</view>
 					<view class="boder-yuan boder-bgc"><text>热度: 0</text></view>
 				</view>
 				<view class="flex image-bottom" style="bottom: 10rpx;">
 					<view class="boder-yuan boder-bgc"><text>标题</text></view>
 					<view class="boder-yuan boder-bgc">
-						<svg class="icon" aria-hidden="true">
-							<use xlink:href="#icon-zhibozhong"></use>
-						</svg>
+						<image src="../../static/tupian/zhibozhong.png" style="width: 40rpx;
+						height: 40rpx;vertical-align: bottom" mode=""></image>
 						<text>直播中</text>
 					</view>
 				</view>
@@ -97,11 +95,7 @@
 		justify-content: space-between;
 
 		.boder-bgc {
-			text{
-				display: inline-block;
-				margin-left: 10rpx;
-				line-height: 24rpx;
-			}
+			display: flex;
 			background-color: rgba(0,0,0,0.4);
 			align-items: center;
 			color: white;

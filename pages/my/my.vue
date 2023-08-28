@@ -8,6 +8,7 @@
 			</view>
 		</scroll-view>
 		<button><navigator url="../nvues/nvues" open-type="navigate">传送</navigator></button>
+		<input type="text" value="" />
 	</view>
 </template>
 
