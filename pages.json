@@ -41,6 +41,20 @@
 		{
 			"path": "pages/nvues/nvues"
 		}
+        ,{
+            "path" : "pages/balance/balance",
+            "style" :                                                                                    
+            {
+                "app-plus": {
+                	"titleNView": {
+                		"autoBackButton": true,
+						"titleText": "我的余额",
+						"backgroundColor": "#f5f5f5"
+                	}
+                }
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

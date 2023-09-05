@@ -14,6 +14,7 @@
 				</view>
 			</swiper-item>
 		</swiper>
+
 		<!-- 轮播图结束 -->
 		<!-- 首页列表 -->
 		<view class="flex flex-wrap" style="width: 750rpx;">
@@ -43,6 +44,7 @@
 </template>
 
 <script>
+	import lists from '../../demon/demon.js'
 	import {
 		mapState,mapMutations
 	} from 'vuex'
@@ -53,7 +55,7 @@
 			}
 		},
 		onLoad() {
-
+			
 		},
 		methods: {
 			...mapMutations('moduleA',['goToDirect'])

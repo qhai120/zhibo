@@ -1,13 +1,13 @@
 <template>
 	<list style="height: 300rpx;"  :show-scrollbar="false" >
-			<cell v-for="(item,index) in num" :key="index" class="row" :ref="'item'+index" insert-animation="default" delete-animation="default" >
+			<cell v-for="(item,index) in liwu" :key="index" class="row" :ref="'item'+index" insert-animation="default" delete-animation="default" >
 					<view :class="['boder_liwu_left','row']" style="align-items: center;">
 						<image src="../../static/phone.png" class="text_yuan" mode=""></image>
 						<view class="direct_Head_Left_Right" style="width: 150rpx;">
 							<text style="display: block;color: white;">昵称</text>
-							<text style="display: block;color: white;">送皇冠</text>
+							<text style="display: block;color: white;">送{{item.name}}</text>
 						</view>
-						<image src="../../static/tupian/liwu2.png"  style="width: 80rpx;
+						<image :src="item.image"  style="width: 80rpx;
 						height: 80rpx;" mode=""></image>
 					</view>
 					<text class="boder_liwu_right">x1</text>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+	// nvue中的方法，要引用
 	const dom = uni.requireNativePlugin('dom')
 	import { mapMutations,mapState,mapActions } from 'vuex';
 	export default {
@@ -26,14 +27,14 @@
 			};
 		},
 		computed:{
-			...mapState('direct',['num'])
+			...mapState('direct',['liwu'])
 		},
 		methods:{
-			...mapMutations('direct',['addNum','resetNum']),
+			...mapMutations('direct',['addLiwu']),
 			// 底部显示礼物
 			tobottom(){
 				this.$nextTick(()=>{
-					let index=this.num -1;
+					let index=this.liwu.length -1;
 					let ref='item'+index;
 					if(this.$refs[ref]){
 						dom.scrollToElement(this.$refs[ref][0],{})
@@ -42,7 +43,7 @@
 			},
 			addnums(){
 				let num=setInterval(()=>{
-					this.addNum()
+					this.addLiwu()
 					this.tobottom()
 				},2000)
 			},

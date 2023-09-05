@@ -178,31 +178,51 @@ module.exports = {
       ]
     }
   },
+  ".boder-box": {
+    "": {
+      "boxSizing": [
+        "border-box",
+        0,
+        0,
+        3
+      ]
+    }
+  },
+  ".white": {
+    "": {
+      "color": [
+        "#FFFFFF",
+        0,
+        0,
+        4
+      ]
+    }
+  },
   ".rounded": {
     "": {
       "borderWidth": [
         "1",
         0,
         0,
-        3
+        5
       ],
       "borderStyle": [
         "solid",
         0,
         0,
-        3
+        5
       ],
       "borderColor": [
         "#e5e5e5",
         0,
         0,
-        3
+        5
       ],
       "borderRadius": [
         "12rpx",
         0,
         0,
-        3
+        5
       ]
     }
   },
@@ -212,7 +232,7 @@ module.exports = {
         "20rpx",
         0,
         0,
-        4
+        6
       ]
     }
   },
@@ -222,19 +242,19 @@ module.exports = {
         "flex",
         0,
         0,
-        5
+        7
       ],
       "flexDirection": [
         "column",
         0,
         0,
-        5
+        7
       ],
       "marginLeft": [
         "10rpx",
         0,
         0,
-        5
+        7
       ]
     }
   },
@@ -244,43 +264,43 @@ module.exports = {
         "86rpx",
         0,
         0,
-        6
+        8
       ],
       "width": [
         "335rpx",
         0,
         0,
-        6
+        8
       ],
       "backgroundImage": [
         "linear-gradient(to right,rgba(255,232,159),aqua)",
         0,
         0,
-        6
+        8
       ],
       "marginBottom": [
         "15rpx",
         0,
         0,
-        6
+        8
       ],
       "paddingLeft": [
         "10rpx",
         0,
         0,
-        6
+        8
       ],
       "boxSizing": [
         "border-box",
         0,
         0,
-        6
+        8
       ],
       "borderRadius": [
         "40rpx",
         0,
         0,
-        6
+        8
       ]
     }
   },
@@ -290,25 +310,25 @@ module.exports = {
         "80rpx",
         0,
         0,
-        7
+        9
       ],
       "height": [
         "80rpx",
         0,
         0,
-        7
+        9
       ],
       "backgroundColor": [
         "#FFFFFF",
         0,
         0,
-        7
+        9
       ],
       "borderRadius": [
         50,
         0,
         0,
-        7
+        9
       ]
     }
   },
@@ -318,19 +338,19 @@ module.exports = {
         "80rpx",
         0,
         0,
-        8
+        10
       ],
       "color": [
         "#FFFFFF",
         0,
         0,
-        8
+        10
       ],
       "textAlign": [
         "center",
         0,
         0,
-        8
+        10
       ]
     }
   },
@@ -340,13 +360,13 @@ module.exports = {
         "#FFFFFF",
         0,
         0,
-        9
+        11
       ],
       "borderRadius": [
         "35rpx",
         0,
         0,
-        9
+        11
       ]
     }
   },

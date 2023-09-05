@@ -24,24 +24,23 @@
 			};
 		},
 		methods:{
-			addList(){
+			addList(text){
 				let num=this.list.length
 				const newList={
 					id:num,
 					name:'老'+num,
-					text:'老'+num+'来了'
+					text:`${text}`
 				}
 				this.list.push(newList)
+				
 			}
 		},
 		mounted() {
 			setInterval(()=>{
-				this.addList()
-				// 要等待一定时间让dom渲染，不然会找不到最新的id
+				// 要等待一定时间让dom渲染，不然会找不到最新的id,scroll_into-view
 				setTimeout(()=>{
 					let num=this.list.length
 					if(num>0 && this.list[num-1] ){
-						console.log((this.scrollinto))
 						this.scrollinto='text'+this.list[num-1].id
 					}
 				},1000)
@@ -55,7 +54,6 @@
 	flex-direction: row;
 	padding: 10rpx;
 	padding-left: 20rpx;
-	box-sizing: border-box;
 	.text1{
 		font-weight: 500;
 		letter-spacing: 4rpx;
