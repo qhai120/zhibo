@@ -1,5 +1,5 @@
 <template>
-	<view class="direct_container">
+	<view  :style="'height'+windowHeight+'px'" style="background-color: rgba(0, 0, 0, 0.4);">
 		<!-- 顶部开始 -->
 		<view class="direct_top">
 			<text>房间</text>
@@ -41,7 +41,7 @@
 		<!-- 礼物区结束 -->
 		<!-- 直播位置开始 -->
 		<view class="video">
-			<video id="myVideo" src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" enable-progress-gesture="false" controls autoplay style="width: 99%;" enable-danmu="true" danmu-btn :danmu-list="danmuList"></video>
+			<video id="myVideo" src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4" enable-progress-gesture="false" :controls="false" :autoplay="false" style="width: 99%;" enable-danmu="true" danmu-btn :danmu-list="danmuList"></video>
 		</view>
 		<!-- 直播位置结束 -->
 		<!-- 弹幕部分开始 -->
@@ -50,7 +50,6 @@
 		</view>
 		<!-- 弹幕部分结束 -->
 		<!-- 底部开始 -->
-		<input type="text">
 		<view class="rows direct_Bottom">
 			
 			<text class="direct_Bottom_Left" @click="open" value="说点什么吧" >{{title}}</text>
@@ -89,6 +88,7 @@
 	export default {
 		data() {
 			return {
+				windowHeight:'',
 				title: "",
 				danmuList:[
 				]
@@ -144,6 +144,11 @@
 			})
 		},
 		onLoad() {
+			uni.getSystemInfo({
+				success: (res) => {
+					this.windowHeight=res.windowHeight
+				}
+			})
 			this.pullIndex()
 			this.getVideo(this.$url + '/getVideo/video')
 		}
@@ -151,10 +156,6 @@
 </script>
 
 <style lang="less" scoped>
-	.direct_container {
-		height: 1620rpx;
-		background-color: rgba(0, 0, 0, 0.4);
-	}
 
 	.rows {
 		flex-direction: row;
@@ -236,6 +237,7 @@
 		width: 750rpx;
 		padding-bottom: 5rpx;
 		align-items: center;
+		background-color: rgba(0,0,0,0.4);
 		justify-content: space-between;
 		.direct_Bottom_Left{
 			width: 350rpx;

@@ -1,0 +1,223 @@
+<template>
+	<view>
+		<live-pusher id='livePusher' ref="livePusher" class="livePusher" :url="url" :device-position="device_position"
+			:mode="mode" :muted="muted" :enable-camera="enable_camera" :auto-focus="auto_focus" :beauty="beauty"
+			:whiteness="beauty" aspect="9:16" @statechange="statechange" @netstatus="netstatus" @error="error"
+			:style="'height:'+windowHeight+'px'" style="width: 750rpx;">
+		</live-pusher>
+		<view class="creat_live row" :style="'top'+startsBarHeight+'px'">
+			<image src="../../static/tupian/guanbi.png" style="width: 70rpx;height: 70rpx;margin-top: 10rpx;" mode="">
+			</image>
+			<view class="create_live_center row">
+				<view class="" style="position: relative;height: 200rpx;">
+					<image src="../../static/phone.png" style=" width: 200rpx;height: 200rpx;" mode="">
+
+					</image>
+					<view style="position: absolute;bottom: 30rpx;left: 0;width: 200rpx;">
+						<text class="small_text" style="text-align: center;">更换封面</text>
+					</view>
+				</view>
+				<view class=" column" style="width: 300rpx;">
+					<input type="text" class="creat_live_center_right_input" value="" placeholder="请输入标题"
+						v-model="title" />
+					<picker :range="category" mode="selector" :value="categoryNum" @change="changeCategoryNum"
+						style="margin-top: 10rpx;">
+						<text class="small_text">选择你的分类:</text>
+						<text style="color: yellow;padding-left: 60rpx;">{{category[categoryNum]}}</text>
+					</picker>
+				</view>
+			</view>
+			<view class="creat_live_right column">
+				<view class="column" style="align-items: center;" @click="changeDevice_position">
+					<image src="../../static/tupian/fanzhuan.png" mode="" class="creat_live_right_image"></image>
+					<text class="small_text">翻转</text>
+				</view>
+				<view class="column" style="align-items: center;" @click="openSelect_Mode">
+					<image src="../../static/tupian/Mainboard.png" mode="" class="creat_live_right_image"></image>
+					<text class="small_text">画质</text>
+				</view>
+				<view class="column" style="align-items: center;">
+					<image src="../../static/tupian/meiyan.png" mode="" class="creat_live_right_image"></image>
+					<text class="small_text">美颜</text>
+				</view>
+				<view class="column" style="align-items: center;">
+					<image src="../../static/tupian/meibai.png" mode="" class="creat_live_right_image"></image>
+					<text class="small_text">美白</text>
+				</view>
+			</view>
+		</view>
+		<view class="create_live_bottom" @click="creat_live_index=creat_live_index==0?'1':'0'">
+			<text :value="creat_live_index==0?'开始直播':'中断直播'" :style="creat_live_index==1?'color:red':''" style="text-align: center;line-height: 150rpx;color: white;"></text>
+		</view>
+		<uni-popup ref="popup"  type="bottom">
+			<view class="select_mode column">
+				<view class="select_mode_item" v-for="(item,index) in modelist" :key="index" :class="mode==item.type?'active_item':''" @click="changeItem(item)">
+					<text :class="item.type==mode?'white':''">{{item.coin}}</text>
+				</view>
+				<view class="select_mode_item" style="margin-top: 10rpx;" @click="close">
+					<text>取消</text>
+				</view>
+			</view>
+		</uni-popup>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				title: '',
+				categoryNum: 0,
+				creat_live_index:0,
+				category: ['数码', '美妆', '游戏'],
+				windowHeight: '',
+				url: '',
+				mode:'SD',
+				modelist: [{type:'SD',coin:'标清'},{type:'HD',coin:'高清'},{type:'FHD',coin:'超清'}],
+				muted: false,
+				enable_camera: true,
+				auto_focus: true,
+				beauty: 0,
+				whiteness: 0,
+				device_position: 'front',
+				context: '',
+				startsBarHeight: ''
+			};
+		},
+		onLoad() {
+			uni.getSystemInfo({
+				success: (res) => {
+					this.windowHeight = res.windowHeight
+					this.startsBarHeight = res.statusBarHeight
+				}
+			})
+		},
+		onReady() {
+			// 获得直播对象(id,this)
+			this.context = uni.createLivePusherContext("livePusher", this)
+			// 开启直播
+			this.startLive()
+		},
+		computed:{
+			
+		},
+		methods: {
+			close(){
+				this.$refs.popup.close()
+			},
+			changeItem(item){
+				this.mode=item.type
+				uni.showToast({
+					title:"画质修改为"+item.coin
+				})
+			},
+			openSelect_Mode(){
+				this.$refs.popup.open()
+			},
+			changeDevice_position(){
+				this.context.switchCamera({
+					success:(e)=>{
+						console.log(e)
+					}
+				})
+			},
+			changeCategoryNum(e) {
+				this.categoryNum = e.detail.value
+			},
+			startLive() {
+				this.context.startPreview({
+					success: (e) => {
+						console.log(e)
+					}
+				})
+			},
+			statechange(e) {
+				console.log(e.detail)
+			},
+			netstatus(e) {
+				console.log(e.detail)
+			},
+			error(e) {
+				console.log(e.detail)
+			}
+		}
+	}
+</script>
+
+<style lang="less">
+	.row {
+		flex-direction: row;
+	}
+
+	.column {
+		flex-direction: column;
+	}
+
+	.creat_live {
+		width: 750rpx;
+		position: fixed;
+		height: 500rpx;
+		left: 0;
+		padding: 20rpx;
+		padding-top: 90rpx;
+
+		.create_live_center {
+			height: 220rpx;
+			margin-left: 10rpx;
+			background-color: rgba(0,0,0,0.4);
+
+			.creat_live_center_right_input {
+				margin-top: 20rpx;
+				height: 70rpx;
+			}
+		}
+
+		.creat_live_right {
+			padding: 10rpx;
+			justify-content: space-between;
+			align-items: center;
+			margin-left: 30rpx;
+
+			.creat_live_right_image {
+				width: 50rpx;
+				height: 50rpx;
+
+			}
+		}
+		
+	}
+	.create_live_bottom{
+		position: fixed;
+		bottom: 200rpx;
+		left: 0;
+		width: 400rpx;
+		height: 150rpx;
+		transform: translateX(50%);
+		background-color: darkblue;
+		
+	}
+	.small_text {
+		font-weight: 400;
+		font-size: 30rpx;
+		line-height: 40rpx;
+	}
+	.select_mode{
+		height: 450rpx;
+		width: 750rpx;
+		background-color: white;
+		padding: 10rpx;
+		.select_mode_item{
+			height: 100rpx;
+			width: 750rpx;
+			padding: 20rpx;
+			background-color: #f5f5f5;
+			line-height: 60rpx;
+			align-items: center;
+			justify-content: center;
+		}
+		.active_item{
+			background-color: aquamarine;
+		}
+		
+	}
+</style>

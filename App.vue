@@ -1,11 +1,10 @@
 <script>
 	export default {
 		onLaunch: function() {
+			// 监听底部导航凸起事件
 			uni.onTabBarMidButtonTap(()=>{
-				uni.showToast({
-					title:"点击了中间按纽",
-					mask:true,
-					duration:2000
+				uni.navigateTo({
+					url:"/pages/create-live/create-live"
 				})
 			})
 			console.log('App Launch')
@@ -20,6 +19,6 @@
 </script>
 
 <style>
-	@import url(common/common.css);
+	@import url("common/common.css");
 	/*每个页面公共css */
 </style>

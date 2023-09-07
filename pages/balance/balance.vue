@@ -14,7 +14,7 @@
 					</view>
 					<text style="margin-top: 30rpx;font-size: 40rpx;color: #e4e4e4;">￥{{item.money}}</text>
 				</view>
-				<view class="balance_Center_congzhi boder-box" style="justify-content: center">
+				<view class="balance_Center_congzhi boder-box" style="justify-content: center" @click="zhiDingYi">
 					<text >自定义</text>
 				</view>
 			</view>
@@ -29,7 +29,7 @@
 		data() {
 			return {
 				list:[],
-				active:1
+				active:0
 			};
 		},
 		computed:{
@@ -38,7 +38,7 @@
 		methods:{
 			...mapMutations('direct',['increaseJinbi']),
 			congzhi(item){
-				
+				this.active=this.list.indexOf(item)
 				uni.showModal({
 					content:`是否充值${item.coin}金币?`,
 					success: (res) => {
@@ -46,6 +46,38 @@
 							this.increaseJinbi(item.coin)
 						}else{
 							return
+						}
+					}
+				})
+			},
+			zhiDingYi(){
+				this.active=6;
+				uni.showModal({
+					editable:"true",
+					title:"充值",
+					placeholderText:"请输入充值的数量",
+					success: (res) => {
+						if(res.cancel){
+							return
+						}else{
+							let money=+res.content;
+							if(money<110){
+								return uni.showToast({
+									icon:"error",
+									title:"请输入大于110"
+								})
+							}else{
+								uni.showModal({
+									content:`是否充值${money}金币?`,
+									success: (res) => {
+										if(res.confirm){
+											this.increaseJinbi(money)
+										}else{
+											return
+										}
+									}
+								})
+							}
 						}
 					}
 				})
@@ -91,6 +123,6 @@
 	}
 }
 .active{
-	border: 4rpx solid orange;
+	background-color: orange;
 }
 </style>

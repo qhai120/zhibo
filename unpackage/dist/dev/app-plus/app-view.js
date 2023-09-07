@@ -1507,6 +1507,11 @@ var render = function () {
                   staticClass: _vm._$g(12, "sc"),
                   staticStyle: { "justify-content": "center" },
                   attrs: { _i: 12 },
+                  on: {
+                    click: function ($event) {
+                      return _vm.$handleViewEvent($event)
+                    },
+                  },
                 },
                 [_c("v-uni-text", { attrs: { _i: 13 } }, [_vm._v("自定义")])],
                 1
@@ -1615,7 +1620,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../HBuilderX.3.6.8.20221027-alpha/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".balance_container {\n  padding: 20rpx;\n}\n.balance_container .balance_Top {\n  width: 100%;\n  height: 300rpx;\n  display: flex;\n  flex-direction: column;\n  background-color: skyblue;\n  text-align: center;\n  padding: 20rpx;\n}\n.balance_container .balance_Center {\n  margin-top: 20rpx;\n  padding: 20rpx;\n  border-top: 2rpx solid #f5f5f5;\n}\n.balance_container .balance_Center_congzhi {\n  width: 200rpx;\n  height: 150rpx;\n  padding: 10rpx;\n  margin-top: 20rpx;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  border: 2rpx solid #f5f5f5;\n}\n.active {\n  border: 4rpx solid orange;\n}\n", ""]);
+exports.push([module.i, ".balance_container {\n  padding: 20rpx;\n}\n.balance_container .balance_Top {\n  width: 100%;\n  height: 300rpx;\n  display: flex;\n  flex-direction: column;\n  background-color: skyblue;\n  text-align: center;\n  padding: 20rpx;\n}\n.balance_container .balance_Center {\n  margin-top: 20rpx;\n  padding: 20rpx;\n  border-top: 2rpx solid #f5f5f5;\n}\n.balance_container .balance_Center_congzhi {\n  width: 200rpx;\n  height: 150rpx;\n  padding: 10rpx;\n  margin-top: 20rpx;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  border: 2rpx solid #f5f5f5;\n}\n.active {\n  background-color: orange;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
