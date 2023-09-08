@@ -24,8 +24,14 @@
             "path" : "pages/my/my",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "我的",
-                "enablePullDownRefresh": false
+                "app-plus": {
+                	"titleNView": {
+						"backgroundColor": "#1495e7",
+                		"autoBackButton": false,
+						"titleText": "我的",
+						"titleColor": "white"
+                	}
+                }
             }
             
         }
@@ -57,6 +63,16 @@
         }
         ,{
             "path" : "pages/create-live/create-live",
+            "style" :                                                                                    
+            {
+                "app-plus": {
+                	"titleNView":false
+                }
+            }
+            
+        }
+        ,{
+            "path" : "pages/liveroom/liveroom",
             "style" :                                                                                    
             {
                 "app-plus": {

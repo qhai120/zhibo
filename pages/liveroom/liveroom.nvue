@@ -1,0 +1,375 @@
+<template>
+	<view :style="'height'+windowHeight+'px'" style="background-color: rgba(0, 0, 0, 0.4);">
+		<!-- 顶部开始 -->
+		<view class="direct_top">
+			<text>房间</text>
+		</view>
+		<!-- 顶部结束 -->
+		<!-- 头部开始 -->
+		<view :class="['direct_Head','rows']" style="justify-content: space-between">
+			<view :class="['direct_Head_Left', 'rows']" style="justify-content: left;">
+				<image class="text_yuan" src="../../static/phone.png" mode=""></image>
+				<view class="direct_Head_Left_Right">
+					<text style="display: block;color: white;">昵称</text>
+					<text style="display: block;color: white;">1000</text>
+				</view>
+				<text :class="['text_inlin_block' ,'text_yuan']"
+					style="background-color: red;margin-left: 50rpx;">+</text>
+			</view>
+			<view class="rows" style="padding-top: 5rpx;">
+				<scroll-view scroll-x="true" show-scrollbar="false" style="width: 260rpx ;white-space: nowrap;">
+					<view class="rows">
+						<view v-for="(item,index) in 12" :key="index">
+							<image src="../../static/phone.png" class="text_yuan" style="margin-right: 10rpx;" mode="">
+							</image>
+						</view>
+					</view>
+				</scroll-view>
+				<text :class="['text_inlin_block', 'text_yuan']" style="background-color: aqua;">1000</text>
+			</view>
+		</view>
+		<!-- 头部结束 -->
+		<!-- 金币区域开始 -->
+		<view class="Gold">
+			<text>金币</text>
+			<text class="Gold_Num">{{jinbi}}</text>
+		</view>
+		<!-- 金币区域结束 -->
+		<!-- 礼物区开始 -->
+		<view class="liwu">
+			<live ref="gift"></live>
+		</view>
+		<!-- 礼物区结束 -->
+		<!-- 直播位置开始 -->
+		<view class="video">
+			<live-pusher id='livePusher' ref="livePusher" class="livePusher" :url="url"
+				:device-position="device_position" :mode="mode" :muted="muted" :enable-camera="enable_camera"
+				:auto-focus="auto_focus" :beauty="beauty" :whiteness="beauty" aspect="9:16" @statechange="statechange"
+				@netstatus="netstatus" @error="error" :style="'height:'+345+'px'" style="width: 750rpx;">
+			</live-pusher>
+		</view>
+		<!-- 直播位置结束 -->
+		<!-- 弹幕部分开始 -->
+		<view class="barrage">
+			<Fdanmu ref="danmu"></Fdanmu>
+		</view>
+		<!-- 弹幕部分结束 -->
+		<!-- 底部开始 -->
+		<view class="rows direct_Bottom">
+			<view v-for="(item,index) in btns" :key="index" @click="handleBottomEvent(item)">
+				<image :src="item.image" style="width: 60rpx;height: 60rpx;" mode=""></image>
+				<text style="font-size: 30rpx;">{{item.name}}</text>
+			</view>
+		</view>
+		<uni-popup ref="popup" type="bottom">
+			<view class="select_mode column">
+				<!-- 画质 -->
+				<scroll-view v-if="propuType=='mode'" scroll-y="true" class="select_mode_mode" :show-scrollbar="false">
+					<view class=" column">
+						<view class="select_mode_item" v-for="(item,index) in modelist" :key="index"
+							:class="mode==item.type?'active_item':''" @click="changeItem(item)">
+							<text :class="mode==item.type?'white':''">{{item.coin}}</text>
+						</view>
+					</view>
+				</scroll-view>
+				<!-- 美颜 -->
+				<view v-if="propuType=='meiyan'" style="padding: 20rpx;">
+					<slider :min="0" :max="10" :value="beauty" :step="1" :show-value="true" @change="changeMei">
+					</slider>
+				</view>
+				<!-- 美白 -->
+				<view v-if="propuType=='meibai'" style="padding: 20rpx;">
+					<slider :min="0" :max="10" :value="whiteness" :step="1" :show-value="true" @change="changeMei">
+					</slider>
+				</view>
+
+				<view v-if="propuType=='more'" class=" column">
+					<view class="select_mode_item">
+						<text>暂停</text>
+					</view>
+					<view class="select_mode_item" @click="back">
+						<text>退出</text>
+					</view>
+				</view>
+				<view class="select_mode_item" style="margin-top: 10rpx;" @click="close">
+					<text>取消</text>
+				</view>
+			</view>
+		</uni-popup>
+	</view>
+</template>
+
+<script>
+	import {
+		mapMutations,
+		mapState,
+		mapActions
+	} from 'vuex';
+	import live from '../../components/live/live.vue'
+	import Fdanmu from '../../components/Fdanmu/Fdanmu.vue'
+	import sendLiWu from "../../components/sendLiWu/sendLiWu.vue"
+	export default {
+		data() {
+			return {
+				windowHeight: '',
+				title: "",
+				danmuList: [],
+				mode: '',
+				device_position: '',
+				beauty: '',
+				whiteness: '',
+				btns: [{
+					name: '翻转',
+					image: '../../static/tupian/fanzhuan.png',
+					event: 'changeDevice_position',
+					params: ''
+				}, {
+					name: '画质',
+					image: '../../static/tupian/Mainboard.png',
+					event: 'openSelect_Mode',
+					params: 'mode'
+				}, {
+					name: '美颜',
+					image: '../../static/tupian/meiyan.png',
+					event: 'openSelect_Mode',
+					params: 'meiyan'
+				}, {
+					name: '美白',
+					image: '../../static/tupian/meibai.png',
+					event: 'openSelect_Mode',
+					params: 'meibai'
+				}, {
+					name: '更多',
+					image: '../../static/tupian/more.png',
+					event: 'openSelect_Mode',
+					params: 'more'
+				}
+				],
+				propuType: '',
+				modelist: [{
+					type: 'SD',
+					coin: '标清'
+				}, {
+					type: 'HD',
+					coin: '高清'
+				}, {
+					type: 'FHD',
+					coin: '超清'
+				}]
+			};
+		},
+		components: {
+			live,
+			Fdanmu,
+			sendLiWu
+		},
+		computed: {
+			...mapState('direct', ['index', 'jinbi'])
+		},
+		methods: {
+			...mapMutations('direct', ['changeIndex']),
+			// 退出
+			back(){
+				uni.showModal({
+					content:'是否结束当前直播',
+					success: (res) => {
+						if(res.confirm){
+							uni.navigateBack({
+								delta:2
+							})
+						}
+					}
+				})
+			},
+			// 功能键的事件
+			handleBottomEvent(item) {
+				this[item.event](item.params)
+			},
+			changeItem(item) {
+				this.mode = item.type
+				uni.showToast({
+					title: '画质修改为:' + item.coin,
+					mask: true
+				})
+			},
+			changeMei(e) {
+				if (this.propuType == 'meiyan') {
+					this.beauty = e.detail.value
+				} else {
+					this.whiteness = e.detail.value
+				}
+			},
+			close() {
+				this.$refs.popup.close()
+			},
+			openSelect_Mode(item) {
+				this.propuType = item
+				this.$refs.popup.open()
+			},
+			changeDevice_position() {
+				this.context.switchCamera({
+					success: (e) => {
+						console.log(e)
+					}
+				})
+			},
+			changeCategoryNum(e) {
+				this.categoryNum = e.detail.value
+			},
+			startLive() {
+				this.context.startPreview({
+					success: (e) => {
+						console.log(e)
+					}
+				})
+			},
+			statechange(e) {
+				console.log(e.detail)
+			},
+			netstatus(e) {
+				console.log(e.detail)
+			},
+			error(e) {
+				console.log(e.detail)
+			}
+		},
+
+		mounted() {
+
+		},
+		onLoad(e) {
+			uni.getSystemInfo({
+				success: (res) => {
+					this.windowHeight = res.windowHeight
+				}
+			})
+
+			let options = JSON.parse(e.options)
+			this.mode = options.mode
+			this.device_position = options.device_position
+			this.beauty = options.beauty
+			this.whiteness = options.whiteness
+
+		},
+		onReady() {
+			// 获得直播对象(id,this)
+			this.context = uni.createLivePusherContext("livePusher", this)
+			// 开启直播
+			this.startLive()
+		},
+	}
+</script>
+
+<style lang="less" scoped>
+	.rows {
+		flex-direction: row;
+	}
+
+	.direct_top {
+		position: fixed;
+		top: 0;
+		height: 100rpx;
+		width: 750rpx;
+		z-index: 1;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(0, 0, 0, 0.4);
+	}
+
+	.direct_Head {
+		padding: 5rpx;
+		width: 750rpx;
+		height: 100rpx;
+		position: fixed;
+		z-index: 1;
+		top: 100rpx;
+
+		.direct_Head_Left {
+			width: 325rpx;
+			padding: 0 10rpx;
+			background-color: aqua;
+			align-items: center;
+			border-radius: 50rpx;
+		}
+	}
+
+	.Gold {
+		flex-direction: row;
+		position: fixed;
+		top: 210rpx;
+		margin-left: 20rpx;
+		align-items: center;
+		z-index: 1;
+		color: orange;
+		font-weight: 500;
+		font-size: 35rpx;
+
+		.Gold_Num {
+
+			padding-left: 10rpx;
+			font-weight: 400;
+			color: white;
+			font-size: 30rpx
+		}
+	}
+
+	.liwu {
+		position: fixed;
+		width: 520rpx;
+		height: 300rpx;
+		z-index: 1;
+		top: 265rpx;
+		padding-left: 20rpx;
+		padding-top: 10rpx;
+	}
+
+	.video {
+		width: 750rpx;
+		padding: 5rpx;
+		padding-top: 400rpx;
+	}
+
+	.barrage {
+		width: 750rpx;
+		height: 400rpx;
+		padding-bottom: 100rpx;
+		background-color: orange;
+	}
+
+	.direct_Bottom {
+		position: fixed;
+		bottom: 0;
+		height: 100rpx;
+		width: 750rpx;
+		padding-bottom: 5rpx;
+		align-items: center;
+		background-color: rgba(0, 0, 0, 0.4);
+		justify-content: space-around;
+
+	}
+
+	.select_mode {
+		width: 750rpx;
+		background-color: white;
+		padding: 10rpx;
+
+		.select_mode_mode {
+			height: 300rpx;
+		}
+
+		.select_mode_item {
+			height: 100rpx;
+			width: 750rpx;
+			padding: 20rpx;
+			background-color: #f5f5f5;
+			line-height: 60rpx;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.active_item {
+			background-color: aquamarine;
+		}
+
+	}
+</style>

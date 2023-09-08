@@ -6,7 +6,7 @@
 			:style="'height:'+windowHeight+'px'" style="width: 750rpx;">
 		</live-pusher>
 		<view class="creat_live row" :style="'top'+startsBarHeight+'px'">
-			<image src="../../static/tupian/guanbi.png" style="width: 70rpx;height: 70rpx;margin-top: 10rpx;" mode="">
+			<image :src="url" style="width: 60rpx;height: 60rpx;margin-top: 10rpx;" mode="">
 			</image>
 			<view class="create_live_center row">
 				<view class="" style="position: relative;height: 200rpx;">
@@ -32,29 +32,42 @@
 					<image src="../../static/tupian/fanzhuan.png" mode="" class="creat_live_right_image"></image>
 					<text class="small_text">翻转</text>
 				</view>
-				<view class="column" style="align-items: center;" @click="openSelect_Mode">
+				<view class="column" style="align-items: center;" @click="openSelect_Mode('mode')">
 					<image src="../../static/tupian/Mainboard.png" mode="" class="creat_live_right_image"></image>
 					<text class="small_text">画质</text>
 				</view>
-				<view class="column" style="align-items: center;">
+				<view class="column" style="align-items: center;" @click="openSelect_Mode('meiyan')">
 					<image src="../../static/tupian/meiyan.png" mode="" class="creat_live_right_image"></image>
 					<text class="small_text">美颜</text>
 				</view>
-				<view class="column" style="align-items: center;">
+				<view class="column" style="align-items: center;" @click="openSelect_Mode('meibai')">
 					<image src="../../static/tupian/meibai.png" mode="" class="creat_live_right_image"></image>
 					<text class="small_text">美白</text>
 				</view>
 			</view>
 		</view>
-		<view class="create_live_bottom" @click="creat_live_index=creat_live_index==0?'1':'0'">
-			<text :value="creat_live_index==0?'开始直播':'中断直播'" :style="creat_live_index==1?'color:red':''" style="text-align: center;line-height: 150rpx;color: white;"></text>
+		<view class="create_live_bottom" @click="gotozhibo">
+			<text style="text-align: center;line-height: 150rpx;color: white;">开始直播</text>
 		</view>
 		<uni-popup ref="popup"  type="bottom">
 			<view class="select_mode column">
-				<view class="select_mode_item" v-for="(item,index) in modelist" :key="index" :class="mode==item.type?'active_item':''" @click="changeItem(item)">
-					<text :class="item.type==mode?'white':''">{{item.coin}}</text>
+				<!-- 画质 -->
+				<scroll-view v-if="propuType=='mode'" scroll-y="true" class="select_mode_mode" :show-scrollbar="false" >
+					<view class=" column">
+						<view class="select_mode_item" v-for="(item,index) in modelist" :key="index" :class="mode==item.type?'active_item':''" @click="changeItem(item)">
+							<text :class="mode==item.type?'white':''">{{item.coin}}</text>
+						</view>
+					</view>
+				</scroll-view>
+				<!-- 美颜 -->
+				<view v-if="propuType=='meiyan'" style="padding: 20rpx;" >
+					<slider  :min="0" :max="10" :value="beauty" :step="1" :show-value="true" @change="changeMei"></slider>
 				</view>
-				<view class="select_mode_item" style="margin-top: 10rpx;" @click="close">
+				<!-- 美白 -->
+				<view v-if="propuType=='meibai'"  style="padding: 20rpx;">
+					<slider :min="0" :max="10" :value="whiteness" :step="1" :show-value="true" @change="changeMei"></slider>
+				</view>
+				<view  class="select_mode_item" style="margin-top: 10rpx;" @click="close">
 					<text>取消</text>
 				</view>
 			</view>
@@ -69,9 +82,11 @@
 				title: '',
 				categoryNum: 0,
 				creat_live_index:0,
+				propuType:'mode',
+				url:'',
 				category: ['数码', '美妆', '游戏'],
 				windowHeight: '',
-				url: '',
+				url: '../../static/tupian/guanbi.png',
 				mode:'SD',
 				modelist: [{type:'SD',coin:'标清'},{type:'HD',coin:'高清'},{type:'FHD',coin:'超清'}],
 				muted: false,
@@ -99,19 +114,38 @@
 			this.startLive()
 		},
 		computed:{
-			
 		},
 		methods: {
-			close(){
-				this.$refs.popup.close()
+			gotozhibo(){
+					uni.navigateTo({
+						url:'/pages/liveroom/liveroom?options='+JSON.stringify({
+							mode:this.mode,
+							device_position: this.device_position,
+							beauty: this.beauty,
+							whiteness: this.whiteness,
+						})
+					})
+				
 			},
 			changeItem(item){
 				this.mode=item.type
 				uni.showToast({
-					title:"画质修改为"+item.coin
+					title:'画质修改为:'+item.coin,
+					mask:true
 				})
 			},
-			openSelect_Mode(){
+			changeMei(e){
+				if(this.propuType=='meiyan'){
+					this.beauty=e.detail.value
+				}else{
+					this.whiteness=e.detail.value
+				}
+			},
+			close(){
+				this.$refs.popup.close()
+			},
+			openSelect_Mode(item){
+				this.propuType=item
 				this.$refs.popup.open()
 			},
 			changeDevice_position(){
@@ -202,10 +236,12 @@
 		line-height: 40rpx;
 	}
 	.select_mode{
-		height: 450rpx;
 		width: 750rpx;
 		background-color: white;
 		padding: 10rpx;
+		.select_mode_mode{
+			height: 300rpx;
+		}
 		.select_mode_item{
 			height: 100rpx;
 			width: 750rpx;
