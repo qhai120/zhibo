@@ -30,7 +30,7 @@
 			...mapState('direct',['liwu'])
 		},
 		methods:{
-			...mapMutations('direct',['addLiwu']),
+			...mapMutations('direct',['removeLiwu']),
 			// 底部显示礼物
 			tobottom(){
 				this.$nextTick(()=>{
@@ -41,18 +41,20 @@
 					}
 				})
 			},
-			addnums(){
+			// 每隔2秒删除一个礼物并移动礼物显示区域
+			removeliwu(){
 				let num=setInterval(()=>{
-					this.addLiwu()
+					this.removeLiwu()
 					this.tobottom()
 				},2000)
 			},
 			send(gift){
-				console.log(gift)
+				return
 			}
 		},
 		created(){
-			this.addnums()
+			// 使用移动礼物
+			this.removeliwu()
 		}
 	}
 </script>

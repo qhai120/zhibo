@@ -45,7 +45,14 @@
             
         },
 		{
-			"path": "pages/nvues/nvues"
+			"path": "pages/nvues/nvues",
+			"style": {
+				"app-plus": {
+					"titleNView": {
+						"titleText": "我的界面"
+					}
+				}
+			}
 		}
         ,{
             "path" : "pages/balance/balance",

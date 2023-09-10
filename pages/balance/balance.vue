@@ -1,9 +1,11 @@
 <template>
 	<view class="balance_container boder-box">
+		<!-- 头部区域，显示当前金币 -->
 		<view class="balance_Top boder-box white">
 			<text style="margin-top: 20rpx;">当前金币</text>
 			<text style="margin-top: 50rpx; font-size: 100rpx;">{{jinbi}}</text>
 		</view>
+		<!-- 金币充值区域 -->
 		<view class="balance_Center boder-box">
 			<text>请选择充值的金币</text>
 			<view class="flex flex-wrap">
@@ -37,6 +39,7 @@
 		},
 		methods:{
 			...mapMutations('direct',['increaseJinbi']),
+			// 充值
 			congzhi(item){
 				this.active=this.list.indexOf(item)
 				uni.showModal({
@@ -50,6 +53,7 @@
 					}
 				})
 			},
+			// 充值（自定义数目）
 			zhiDingYi(){
 				this.active=6;
 				uni.showModal({
@@ -84,11 +88,13 @@
 			}
 		},
 		created() {
+			// 获得充值列表
 			this.list=lists.jine
 		},
 		onLoad(){
+			// 测试通讯
 			this.getOpenerEventChannel().on('jump',(data)=>{
-				console.log(data)
+				return
 			})
 		}
 	}

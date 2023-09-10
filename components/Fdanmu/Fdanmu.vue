@@ -24,6 +24,7 @@
 			};
 		},
 		methods:{
+			// 发送弹幕
 			addList(text){
 				let num=this.list.length
 				const newList={
@@ -36,6 +37,7 @@
 			}
 		},
 		mounted() {
+			// 弹幕滚动
 			setInterval(()=>{
 				// 要等待一定时间让dom渲染，不然会找不到最新的id,scroll_into-view
 				setTimeout(()=>{

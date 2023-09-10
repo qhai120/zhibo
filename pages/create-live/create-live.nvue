@@ -1,10 +1,12 @@
 <template>
 	<view>
+		<!-- 头部区域 -->
 		<live-pusher id='livePusher' ref="livePusher" class="livePusher" :url="url" :device-position="device_position"
 			:mode="mode" :muted="muted" :enable-camera="enable_camera" :auto-focus="auto_focus" :beauty="beauty"
 			:whiteness="beauty" aspect="9:16" @statechange="statechange" @netstatus="netstatus" @error="error"
 			:style="'height:'+windowHeight+'px'" style="width: 750rpx;">
 		</live-pusher>
+		<!-- 更换封面，分类，标题 -->
 		<view class="creat_live row" :style="'top'+startsBarHeight+'px'">
 			<image :src="url" style="width: 60rpx;height: 60rpx;margin-top: 10rpx;" mode="">
 			</image>
@@ -27,6 +29,7 @@
 					</picker>
 				</view>
 			</view>
+			<!-- 功能键 -->
 			<view class="creat_live_right column">
 				<view class="column" style="align-items: center;" @click="changeDevice_position">
 					<image src="../../static/tupian/fanzhuan.png" mode="" class="creat_live_right_image"></image>
@@ -49,6 +52,7 @@
 		<view class="create_live_bottom" @click="gotozhibo">
 			<text style="text-align: center;line-height: 150rpx;color: white;">开始直播</text>
 		</view>
+		<!-- 弹出层显示 -->
 		<uni-popup ref="popup"  type="bottom">
 			<view class="select_mode column">
 				<!-- 画质 -->
@@ -100,6 +104,7 @@
 			};
 		},
 		onLoad() {
+			// 获得设备宽高
 			uni.getSystemInfo({
 				success: (res) => {
 					this.windowHeight = res.windowHeight
@@ -127,6 +132,7 @@
 					})
 				
 			},
+			// 修改画质
 			changeItem(item){
 				this.mode=item.type
 				uni.showToast({
@@ -134,6 +140,7 @@
 					mask:true
 				})
 			},
+			// 修改美白
 			changeMei(e){
 				if(this.propuType=='meiyan'){
 					this.beauty=e.detail.value
@@ -141,13 +148,16 @@
 					this.whiteness=e.detail.value
 				}
 			},
+			// 关闭弹出层
 			close(){
 				this.$refs.popup.close()
 			},
+			// 开启弹出层
 			openSelect_Mode(item){
 				this.propuType=item
 				this.$refs.popup.open()
 			},
+			// 翻转摄像头
 			changeDevice_position(){
 				this.context.switchCamera({
 					success:(e)=>{
@@ -155,9 +165,11 @@
 					}
 				})
 			},
+			// 改变直播分类序列号
 			changeCategoryNum(e) {
 				this.categoryNum = e.detail.value
 			},
+			// 开启摄像头预览
 			startLive() {
 				this.context.startPreview({
 					success: (e) => {

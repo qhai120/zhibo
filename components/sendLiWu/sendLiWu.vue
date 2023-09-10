@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<!-- 发送礼物的弹窗 -->
 		<uni-popup ref='sendliwu' type="bottom">
 			<view class="sendliwu">
 				<view class="sendliwu_Top row">
@@ -35,11 +36,13 @@
 		data() {
 			return {
 				list: '',
+				// 选中的礼物序列号
 				activeId: 0
 			};
 		},
 		computed:{
 			...mapState('direct',['jinbi']),
+			// 获得所选折的礼物与价格
 			computeBalance(){
 				let item=this.list.findIndex(item=>item.id===this.activeId)
 				let  num=this.jinbi-this.list[item].coin
@@ -48,16 +51,21 @@
 		},
 		methods: {
 			...mapMutations('direct',['changeLiwu','decreaseJinbi']),
+			// 父组件以此来打开该组件
 			opensend() {
 				this.$refs.sendliwu.open('bottom')
 			},
+			// 关闭组件
 			close() {
 				this.$refs.sendliwu.close()
 			},
+			// 改变选择的礼物序列号
 			changeActiveId(id) {
 				this.activeId=id
 			},
+			// 发送选择的礼物
 			send() {
+				// 为0则为未选中任何礼物
 				if (this.activeId === 0) {
 					return uni.showToast({
 						icon:"error",
@@ -69,6 +77,7 @@
 					const {item,num}=this.computeBalance
 					if(item!=-1){
 						if(num>0){
+							// 改变送的礼物list与减少金钱
 							this.changeLiwu(this.list[item])
 							this.decreaseJinbi(num)
 						}

@@ -103,17 +103,21 @@
 		methods: {
 			...mapMutations('direct', ['changeIndex']),
 			...mapActions('direct', ['getVideo']),
+			// 测试通信
 			pullIndex(state) {
 				this.getOpenerEventChannel().on('pushIndex', (data) => {
 					this.changeIndex(data.Index)
 				})
 			},
+			// 开启弹窗
 			open() {
 				this.$refs.popup.open('bottom')
 			},
+			// 组件方法使用开启弹窗
 			openGift(){
 				this.$refs.sendliwu.opensend()
 			},
+			// 关闭发言弹窗
 			close() {
 				this.$refs.popup.close()
 				this.faDanMu()
@@ -144,12 +148,15 @@
 			})
 		},
 		onLoad() {
+			// 获得设备宽高
 			uni.getSystemInfo({
 				success: (res) => {
 					this.windowHeight=res.windowHeight
 				}
 			})
+			// 通信
 			this.pullIndex()
+			// 获得video地址
 			this.getVideo(this.$url + '/getVideo/video')
 		}
 	}

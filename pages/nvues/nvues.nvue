@@ -1,8 +1,22 @@
 <template>
-	<view style="flex-direction: row;">
-		<view class="div" v-for="i in 4" :key="i" >
-			
-		</view>
+	<view class="nvues_containes">
+		<uni-forms ref="form" err-show-type='toast' validateTrigger='blur' :model="formData" :rules="rules">
+			<uni-forms-item label="姓名:" name="name">
+				<uni-easyinput type="text" trim="all" placeholder="请输入姓名" v-model.lazy="formData.name"></uni-easyinput>
+			</uni-forms-item>
+			<uni-forms-item label="密码:" name="password">
+				<uni-easyinput type="password" placeholder="请输入密码" v-model.lazy="formData.password"></uni-easyinput>
+			</uni-forms-item>
+			<uni-forms-item label="邮箱:" name="email">
+				<uni-easyinput type="text" placeholder="请输入邮箱" v-model.trim="formData.email"></uni-easyinput>
+			</uni-forms-item>
+			<uni-forms-item label="头像:" name="avatar">
+				<uni-file-picker ref="files" fileMediatype="image" limit="2" :auto-upload="false"
+					:image-styles="imageStyles" @select="selectFiles" @delete="deleteFiles" />
+			</uni-forms-item>
+			<button @click="submit">提交</button>
+		</uni-forms>
+		<button @click="getaa">测试图片上传</button>
 	</view>
 </template>
 
@@ -10,20 +24,118 @@
 	export default {
 		data() {
 			return {
-				
+				formData: {
+					name: '',
+					email: '',
+					password: '',
+				},
+				// 验证规则
+				rules: {
+					name: {
+						label: '姓名',
+						rules: [{
+							required: true,
+							errorMessage: '请输入姓名'
+						}, {
+							minLength: 3,
+							maxLength: 5,
+							errorMessage: '姓名长度在 {minLength} 到 {maxLength} 个字符',
+						}, ]
+					},
+					email: {
+						label: '邮箱',
+						rules: [{
+								required: true,
+								errorMessage: '请输入邮箱',
+							},
+							{
+								validateFunction: function(rule, value, data, callback) {
+									let boll = /^\S+?@\S+?\.\S+?$/.test(value)
+									console.log(boll)
+									if (boll) {
+										return true
+									} else {
+										callback('请输入正确邮箱')
+									}
+								}
+							}
+						]
+					},
+					password: {
+						label: "密码",
+						rules: [{
+								required: true,
+								minLength: 6,
+								maxLength: 12,
+								errorMessage: "请输入6到12位字符",
+							},
+							// 自定义验证
+							{
+								validateFunction: function(rule, value, data, callback) {
+									let boll = /^[A-Z][0-9 a-z A-Z]{5,11}$/.test(value)
+									console.log(boll)
+									if (boll) {
+										return true
+									} else {
+										callback('请输入大写开头的6到12位密码')
+									}
+								}
+							}
+
+						]
+					}
+				},
+				// 回显图大小
+				imageStyles: {
+					width: 100,
+					height: 100
+				},
+				// 上传文件list
+				avatar:[]
 			}
 		},
 		methods: {
-			
+			// 将选中的文件加入avatar数组
+			selectFiles(e) {
+				this.avatar.push({name:'file',uri:e.tempFiles[0].path})
+			},
+			// 从avatar数组中删除取消的文件对象
+			deleteFiles(e){
+				let num=this.avatar.findIndex(item=> item.uri==e.tempFile.url)
+				this.avatar.splice(num,1)
+			},
+			// 发起上传请求
+			getaa() {
+				if(this.avatar.length==0){
+					return console.log('文件为空')
+				}else{
+					uni.uploadFile({
+						url: this.$url + '/user/changeMy',
+						files:this.avatar,
+						FormData: this.formData,
+						success: (res) => {
+							console.log(res.data)
+						}
+					})
+				}
+			},
+			// 发起表单请求
+			submit() {
+				this.$refs.form.validate().then(res => {
+					console.log(res)
+				}).catch(res => {
+					console.log(res)
+				})
+			}
+		},
+		onLoad() {
+
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-.div{
-	width: 50rpx;
-	height: 50rpx;
-	flex-direction: row;
-	background-color: aqua;
-}
+	.nvues_containes {
+		padding: 20rpx;
+	}
 </style>

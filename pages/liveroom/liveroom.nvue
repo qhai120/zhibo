@@ -1,5 +1,5 @@
 <template>
-	<view :style="'height'+windowHeight+'px'" style="background-color: rgba(0, 0, 0, 0.4);">
+	<view :style="'height'+windowHeight+'px'">
 		<!-- 顶部开始 -->
 		<view class="direct_top">
 			<text>房间</text>
@@ -31,7 +31,7 @@
 		<!-- 头部结束 -->
 		<!-- 金币区域开始 -->
 		<view class="Gold">
-			<text>金币</text>
+			<text style="color: orange;">金币</text>
 			<text class="Gold_Num">{{jinbi}}</text>
 		</view>
 		<!-- 金币区域结束 -->
@@ -45,7 +45,7 @@
 			<live-pusher id='livePusher' ref="livePusher" class="livePusher" :url="url"
 				:device-position="device_position" :mode="mode" :muted="muted" :enable-camera="enable_camera"
 				:auto-focus="auto_focus" :beauty="beauty" :whiteness="beauty" aspect="9:16" @statechange="statechange"
-				@netstatus="netstatus" @error="error" :style="'height:'+345+'px'" style="width: 750rpx;">
+				@netstatus="netstatus" @error="error" :style="'height:'+windowHeight+'px'" style="width: 750rpx;">
 			</live-pusher>
 		</view>
 		<!-- 直播位置结束 -->
@@ -273,7 +273,6 @@
 		z-index: 1;
 		align-items: center;
 		justify-content: center;
-		background-color: rgba(0, 0, 0, 0.4);
 	}
 
 	.direct_Head {
@@ -300,7 +299,6 @@
 		margin-left: 20rpx;
 		align-items: center;
 		z-index: 1;
-		color: orange;
 		font-weight: 500;
 		font-size: 35rpx;
 
@@ -325,15 +323,13 @@
 
 	.video {
 		width: 750rpx;
-		padding: 5rpx;
-		padding-top: 400rpx;
 	}
 
 	.barrage {
+		position: fixed;
+		bottom: 100rpx;
 		width: 750rpx;
 		height: 400rpx;
-		padding-bottom: 100rpx;
-		background-color: orange;
 	}
 
 	.direct_Bottom {

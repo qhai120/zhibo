@@ -19,7 +19,7 @@ const direct = {
 		increaseJinbi(state,num){
 			state.jinbi=state.jinbi+num
 		},
-		addLiwu(state) {
+		removeLiwu(state) {
 			const num = state.liwu.length
 			if (num != 0) {
 				let num = setTimeout(() => {
